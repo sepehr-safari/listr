@@ -126,16 +126,16 @@ const FeedSlice: StateCreator<FeedSlice & PoolSlice, [], [], FeedSlice> = (
 
     const handleMainFilters = (): Filter[] => {
       return !options
-        ? [{ kinds: [37777], limit: 10 }]
+        ? [{ kinds: [37777], limit: 20 }]
         : options.author
         ? [
             { authors: [options.author], kinds: [0] },
             { authors: [options.author], kinds: [37777], limit: 20 },
           ]
         : options.id
-        ? [{ ids: [options.id], kinds: [37777], limit: 10 }]
+        ? [{ ids: [options.id], kinds: [37777], limit: 20 }]
         : options.categories
-        ? [{ '#d': options.categories, kinds: [37777], limit: 10 }]
+        ? [{ '#d': options.categories, kinds: [37777], limit: 20 }]
         : [];
     };
 

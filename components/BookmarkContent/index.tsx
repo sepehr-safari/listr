@@ -1,5 +1,4 @@
-// import Link from 'next/link';
-// import { nip19 } from 'nostr-tools';
+import Link from 'next/link';
 import { memo } from 'react';
 
 import { StarIcon } from '@heroicons/react/24/solid';
@@ -25,7 +24,17 @@ const BookmarkContent = ({ tags }: { tags: string[][] }) => {
                     className="tooltip tooltip-top tooltip-info text-start"
                     data-tip={key}
                   >
-                    <span>{value}</span>
+                    {key === 'e' ? (
+                      <Link href={`https://www.nostribe.com/post/${value}`}>
+                        {value}
+                      </Link>
+                    ) : key === 'p' ? (
+                      <Link href={`https://www.nostribe.com/profile/${value}`}>
+                        {value}
+                      </Link>
+                    ) : (
+                      <span>{value}</span>
+                    )}
                   </div>
                 </div>
               );
