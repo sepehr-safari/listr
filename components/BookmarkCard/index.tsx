@@ -155,7 +155,7 @@ const BookmarkCard = ({ data }: { data: BookmarkData }) => {
                       className="text-start text-xs"
                       onClick={() =>
                         navigator.clipboard.writeText(
-                          `${location.origin}/list/${naddr})}`
+                          `${location.origin}/list/${naddr}`
                         )
                       }
                     >
