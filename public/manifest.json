@@ -1,0 +1,18 @@
+{
+  "name": "Listr",
+  "short_name": "Listr",
+  "description": "Bookmark your favorite finds and share them with Listr.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#111327",
+  "theme_color": "#111327",
+  "icons": [
+    {
+      "src": "/listr.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    }
+  ],
+  "orientation": "portrait",
+  "prefer_related_applications": false
+}
