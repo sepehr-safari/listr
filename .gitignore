@@ -24,6 +24,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+/app/(dashboard)/api
+/app/(dashboard)/test
 
 # local env files
 .env*.local
