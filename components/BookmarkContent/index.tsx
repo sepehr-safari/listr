@@ -21,7 +21,7 @@ const BookmarkContent = ({ tags }: { tags: string[][] }) => {
                 >
                   {index === 0 && <StarIcon width={24} />}
                   <div
-                    className="tooltip tooltip-top tooltip-info text-start"
+                    className="tooltip tooltip-top tooltip-info text-start break-all"
                     data-tip={key}
                   >
                     {key === 'e' ? (
