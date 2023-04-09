@@ -10,7 +10,7 @@ Listr is a simple and functional web app based on the Nostr Protocol for making 
 
 ## Getting Started
 
-To get started with Listr, simply visit our website at [listr.vercel.app](https://listr.vercel.app/) or clone the repository and run it locally.
+To get started with Listr, simply visit our website at [listr-demo.vercel.app](https://listr-demo.vercel.app/) or clone the repository and run it locally.
 
 ## Contributing
 
