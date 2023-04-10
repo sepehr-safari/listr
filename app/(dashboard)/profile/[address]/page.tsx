@@ -43,9 +43,13 @@ const Profile = ({ params }: { params: { address: string } }) => {
     <>
       <ProfileCard data={data.author} />
 
-      {data.bookmarks?.map((bookmark, index) => (
-        <BookmarkCard key={index} data={bookmark} />
-      ))}
+      {isFetching ? (
+        <Spinner />
+      ) : (
+        data.bookmarks?.map((bookmark, index) => (
+          <BookmarkCard key={index} data={bookmark} />
+        ))
+      )}
     </>
   );
 };

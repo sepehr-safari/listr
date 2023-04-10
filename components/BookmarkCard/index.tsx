@@ -40,6 +40,14 @@ const BookmarkCard = ({ data }: { data: BookmarkData }) => {
   const [sliceStart, setSliceStart] = useState<number>(0);
   const [sliceEnd, setSliceEnd] = useState<number>(5);
 
+  const { event, metadata, reactions = [] } = data;
+
+  const dTag = event.tags.find((tag) => tag[0] === 'd');
+  const typeTag = event.tags.find((tag) => tag[0] === 'type');
+  const pureTags = event.tags.filter(
+    (tag) => tag[0] !== 'type' && tag[0] !== 'd'
+  );
+
   const handleDeleteBookmark = useCallback(
     (id: string) => {
       setIsDeleting(true);
@@ -56,23 +64,17 @@ const BookmarkCard = ({ data }: { data: BookmarkData }) => {
 
   const handleNextPage = useCallback(() => {
     setSliceStart((prev) =>
-      prev + 5 > data.event.tags.length - 6
-        ? data.event.tags.length - 6
-        : prev + 5
+      prev + 5 > pureTags.length - 5 ? pureTags.length - 5 : prev + 5
     );
     setSliceEnd((prev) =>
-      prev + 5 > data.event.tags.length - 1
-        ? data.event.tags.length - 1
-        : prev + 5
+      prev + 5 > pureTags.length ? pureTags.length : prev + 5
     );
-  }, [data.event.tags.length]);
+  }, [pureTags.length]);
 
   const handlePrevPage = useCallback(() => {
     setSliceStart((prev) => (prev - 5 < 0 ? 0 : prev - 5));
     setSliceEnd((prev) => (prev - 5 < 5 ? 5 : prev - 5));
   }, []);
-
-  const { event, metadata, reactions = [] } = data;
 
   const profileObject: IAuthor = JSON.parse(metadata?.content || '{}');
 
@@ -96,6 +98,9 @@ const BookmarkCard = ({ data }: { data: BookmarkData }) => {
       </CardContainer>
     );
   }
+
+  if (!dTag || !typeTag)
+    return <CardContainer>{`list data corrupted`}</CardContainer>;
 
   return (
     <>
@@ -172,7 +177,7 @@ const BookmarkCard = ({ data }: { data: BookmarkData }) => {
                       Open Profile
                     </Link>
                   </li>
-                  {data.event.pubkey === selfPubkey && (
+                  {event.pubkey === selfPubkey && (
                     <li>
                       <button
                         className="text-xs text-start"
@@ -190,21 +195,17 @@ const BookmarkCard = ({ data }: { data: BookmarkData }) => {
           <div className="flex flex-col gap-4 break-words">
             <div className="flex justify-end gap-2">
               <Link
-                href={encodeURI(
-                  '/category/' +
-                    data.event.tags.find((tag) => tag[0] === 'd')?.[1]
-                )}
+                href={encodeURI('/category/' + dTag?.[1])}
                 className="btn btn-sm btn-outline text-neutral gap-2 md:btn md:btn-outline md:text-neutral"
               >
                 <BookmarkIcon width={24} />
-                {data.event.tags.find((tag) => tag[0] === 'd')?.[1]}
+                {dTag?.[1]}
               </Link>
             </div>
 
             <BookmarkContent
-              tags={data.event.tags
-                .filter((tag) => tag[0] === 'json')
-                .slice(sliceStart, sliceEnd)}
+              tags={pureTags.slice(sliceStart, sliceEnd)}
+              bookmarkType={typeTag?.[1]}
             />
           </div>
 
@@ -216,7 +217,7 @@ const BookmarkCard = ({ data }: { data: BookmarkData }) => {
               </button>
             )}
 
-            {sliceEnd < event.tags.length - 1 && (
+            {sliceEnd < pureTags.length && (
               <button
                 className="btn btn-ghost gap-2 ml-auto"
                 onClick={handleNextPage}
@@ -255,16 +256,6 @@ const BookmarkCard = ({ data }: { data: BookmarkData }) => {
             {}
           </button>
         </div>
-
-        {/* <div className="flex flex-col gap-2">
-            {reactionEventList
-              .filter((event) => event.kind === 1)
-              .map((comment, index) => (
-                <div key={index} className="flex gap-2">
-                  <div>{comment.content}</div>
-                </div>
-              ))}
-          </div> */}
       </CardContainer>
     </>
   );

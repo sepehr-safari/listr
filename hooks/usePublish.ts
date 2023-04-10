@@ -14,7 +14,7 @@ interface Options {
   content?: Record<string, string>;
   pubkey?: string;
   privateKey?: string;
-  onSuccess?: () => void;
+  onSuccess?: (event: Event) => void;
   onFailure?: () => void;
 }
 const usePublish = () => {
@@ -50,7 +50,7 @@ const usePublish = () => {
     const pub = publish(signedEvent);
 
     pub.on('ok', () => {
-      onSuccess && onSuccess();
+      onSuccess && onSuccess(signedEvent);
     });
 
     pub.on('failed', () => {
