@@ -19,7 +19,7 @@ interface Options {
 }
 const usePublish = () => {
   const userData = useStore((state) => state.auth.user.data);
-  const { publish } = useStore((state) => state.pool);
+  const publish = useStore((state) => state.pool.publish);
 
   return ({
     content,
