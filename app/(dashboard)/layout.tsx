@@ -1,4 +1,4 @@
-import { Header, Navbar } from '@/components';
+import { Header } from '@/components';
 
 export default function DashboardLayout({
   children,
@@ -7,11 +7,7 @@ export default function DashboardLayout({
 }) {
   return (
     <>
-      <header className="fixed top-0 z-20 w-full bg-base-200 bg-opacity-50 shadow-lg shadow-black backdrop-blur-lg">
-        <Header />
-
-        <Navbar />
-      </header>
+      <Header />
 
       <main className="flex justify-center pt-32">
         <div className="flex w-full max-w-screen-xl justify-center">

@@ -1,10 +1,9 @@
 import Link from 'next/link';
-import { ReactNode } from 'react';
 
 interface NavItem {
   label: string;
   href: string;
-  icon: ReactNode;
+  icon: React.ReactNode;
 }
 
 export default function NavItem({ label, href, icon }: NavItem) {

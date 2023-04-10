@@ -1,4 +1,9 @@
-import { HashtagIcon, HomeIcon, UserIcon } from '@heroicons/react/24/outline';
+import {
+  HashtagIcon,
+  HomeIcon,
+  PlusIcon,
+  UserIcon,
+} from '@heroicons/react/24/outline';
 
 import NavItem from './NavItem';
 
@@ -12,6 +17,9 @@ export default function Navbar() {
           </li>
           <li>
             <NavItem label="Explore" href="/explore" icon={<HashtagIcon />} />
+          </li>
+          <li>
+            <NavItem label="Publish" href="/publish" icon={<PlusIcon />} />
           </li>
           <li>
             <NavItem label="Me" href="/me" icon={<UserIcon />} />

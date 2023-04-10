@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { memo, useEffect, useState } from 'react';
 
 import { UserIcon } from '@heroicons/react/24/outline';
 
@@ -8,6 +9,12 @@ import useStore from '@/store';
 
 const UserEmber = () => {
   const userData = useStore((state) => state.auth.user.data);
+  const [hasUser, setHasUser] = useState(false);
+
+  // zustand has a bug with persisting data
+  useEffect(() => {
+    userData && setHasUser(true);
+  }, [userData]);
 
   return (
     <div className="dropdown-bottom dropdown-left dropdown">
@@ -18,7 +25,7 @@ const UserEmber = () => {
         tabIndex={0}
         className="dropdown-content menu rounded-box w-32 bg-base-100 p-2 shadow-lg shadow-black"
       >
-        {userData ? (
+        {hasUser ? (
           <>
             <li>
               <Link className="text-xs" href="/settings">
@@ -32,17 +39,15 @@ const UserEmber = () => {
             </li>
           </>
         ) : (
-          <>
-            <li>
-              <Link className="text-xs" href="/login">
-                Login
-              </Link>
-            </li>
-          </>
+          <li>
+            <Link className="text-xs" href="/login">
+              Login
+            </Link>
+          </li>
         )}
       </ul>
     </div>
   );
 };
 
-export default UserEmber;
+export default memo(UserEmber);

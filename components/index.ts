@@ -6,7 +6,6 @@ export { default as BoxLoader } from './BoxLoader';
 export { default as CardContainer } from './CardContainer';
 export { default as Header } from './Header';
 export { default as ListView } from './ListView';
-export { default as Navbar } from './Navbar';
 export { default as Nip05View } from './Nip05View';
 export { default as ProfileCard } from './ProfileCard';
 export { default as Searchbar } from './Searchbar';
