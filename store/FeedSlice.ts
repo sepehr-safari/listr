@@ -126,16 +126,16 @@ const FeedSlice: StateCreator<FeedSlice & PoolSlice, [], [], FeedSlice> = (
 
     const handleMainFilters = (): Filter[] => {
       return !options
-        ? [{ kinds: [37777], limit: 20 }]
+        ? [{ kinds: [33777], limit: 20 }]
         : options.author
         ? [
             { authors: [options.author], kinds: [0] },
-            { authors: [options.author], kinds: [37777], limit: 20 },
+            { authors: [options.author], kinds: [33777], limit: 20 },
           ]
         : options.id
-        ? [{ ids: [options.id], kinds: [37777], limit: 20 }]
+        ? [{ ids: [options.id], kinds: [33777], limit: 20 }]
         : options.categories
-        ? [{ '#d': options.categories, kinds: [37777], limit: 20 }]
+        ? [{ '#d': options.categories, kinds: [33777], limit: 20 }]
         : [];
     };
 
@@ -145,7 +145,7 @@ const FeedSlice: StateCreator<FeedSlice & PoolSlice, [], [], FeedSlice> = (
       } else if (e.kind === 3) {
         handleAuthorContact(e);
         // @ts-ignore
-      } else if (e.kind === 37777) {
+      } else if (e.kind === 33777) {
         handleNewBookmark(e);
       }
     };
