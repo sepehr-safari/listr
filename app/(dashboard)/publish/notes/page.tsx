@@ -10,7 +10,7 @@ import { usePublish } from '@/hooks';
 
 const Notes = () => {
   const router = useRouter();
-  const [noteIdList, setNoteIdList] = useState<string[]>(['', '']);
+  const [noteIdList, setNoteIdList] = useState<string[]>(['']);
   const catRef = useRef<HTMLInputElement>(null);
 
   const publish = usePublish();

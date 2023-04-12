@@ -55,7 +55,7 @@ const ProfileCard = ({ data }: { data: AuthorData }) => {
                 {nip05 && <Nip05View text={nip05} />}
 
                 {website && (
-                  <a className="text-xs text-info" href={website}>
+                  <a className="text-xs text-info break-all" href={website}>
                     {website}
                   </a>
                 )}

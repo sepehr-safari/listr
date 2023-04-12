@@ -10,7 +10,7 @@ import { usePublish } from '@/hooks';
 
 const Profiles = () => {
   const router = useRouter();
-  const [profileId, setProfileIdList] = useState<string[]>(['', '']);
+  const [profileId, setProfileIdList] = useState<string[]>(['']);
   const catRef = useRef<HTMLInputElement>(null);
 
   const publish = usePublish();

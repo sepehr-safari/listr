@@ -6,6 +6,7 @@ import { memo } from 'react';
 import {
   ChatBubbleLeftEllipsisIcon,
   DocumentTextIcon,
+  LinkIcon,
   ListBulletIcon,
   UsersIcon,
   WifiIcon,
@@ -25,13 +26,17 @@ const Publish = () => {
           <UsersIcon width={20} />
           Nostr Profiles
         </Link>
-        <Link className="btn-sm btn gap-2" href="/publish/relays">
+        {/* <Link className="btn-sm btn gap-2" href="/publish/relays">
           <WifiIcon width={20} />
           Nostr Relays
-        </Link>
+        </Link> */}
         <Link className="btn-sm btn gap-2" href="/publish/articles">
           <DocumentTextIcon width={20} />
           Nostr Articles
+        </Link>
+        <Link className="btn-sm btn gap-2" href="/publish/urls">
+          <LinkIcon width={20} />
+          External Urls
         </Link>
         <Link className="btn-sm btn gap-2" href="/publish/custom">
           <ListBulletIcon width={20} />
