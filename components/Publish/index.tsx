@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { nip19 } from 'nostr-tools';
 import { useRouter } from 'next/navigation';
 
@@ -22,9 +22,11 @@ const getTagCode = (value: string) => {
   const tagType = getTagType(value);
 
   switch (tagType) {
-    case 'u' || 'r':
+    case 'u':
+    case 'r':
       return new URL(value).href.normalize();
-    case 'p' || 'e':
+    case 'e':
+    case 'p':
       return nip19.decode(value).data.toString();
     case 'a':
       const { data } = nip19.decode(value);
@@ -66,6 +68,8 @@ const Publish = ({ address }: { address?: string }) => {
       const id = nip19.decode(address).data.identifier;
 
       fetchFeed({ id: id });
+    } else {
+      clearFeed();
     }
 
     return () => clearFeed();
@@ -238,4 +242,4 @@ const Publish = ({ address }: { address?: string }) => {
   );
 };
 
-export default memo(Publish);
+export default Publish;
