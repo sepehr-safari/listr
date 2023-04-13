@@ -12,7 +12,7 @@ interface BookmarkContentProps {
 
 const BookmarkContent = ({ tags, headers }: BookmarkContentProps) => {
   return (
-    <ul className="flex flex-col gap-6">
+    <ul className="flex flex-col gap-6 [overflow-wrap:anywhere]">
       {(tags || []).map((tag, index) => {
         const [tagType, ...data] = tag;
 
@@ -50,13 +50,13 @@ const BookmarkContent = ({ tags, headers }: BookmarkContentProps) => {
                         !view.startsWith('http' || 'www.') ? (
                           <>
                             <StarIcon width={20} />
-                            <span className="break-all">{view}</span>
+                            <span className="">{view}</span>
                           </>
                         ) : (
                           <>
                             <a className="flex gap-2" href={view}>
                               <StarIcon width={20} />
-                              <span className="break-all">{view}</span>
+                              <span className="">{view}</span>
                             </a>
                           </>
                         )}
@@ -73,14 +73,14 @@ const BookmarkContent = ({ tags, headers }: BookmarkContentProps) => {
                           <a className="flex gap-2" href={value}>
                             {index > 2 && <span>{headers[index]}:</span>}
 
-                            <span className="break-all">{value}</span>
+                            <span className="">{value}</span>
                           </a>
                         </>
                       ) : (
                         <>
                           {index > 2 && <span>{headers[index]}:</span>}
 
-                          <span className="break-all">{value}</span>
+                          <span className="">{value}</span>
                         </>
                       )}
                     </p>
