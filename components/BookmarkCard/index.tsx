@@ -176,14 +176,25 @@ const BookmarkCard = ({ data }: { data: BookmarkData }) => {
                     </Link>
                   </li>
                   {event.pubkey === selfPubkey && (
-                    <li>
-                      <button
-                        className="text-xs text-start"
-                        onClick={() => handleDeleteBookmark(event.id)}
-                      >
-                        Delete List
-                      </button>
-                    </li>
+                    <>
+                      <hr className="opacity-30 my-2" />
+                      <li>
+                        <Link
+                          className="text-xs text-start"
+                          href={`/edit/${naddr}`}
+                        >
+                          Edit List
+                        </Link>
+                      </li>
+                      <li>
+                        <button
+                          className="text-xs text-start text-warning"
+                          onClick={() => handleDeleteBookmark(event.id)}
+                        >
+                          Delete List
+                        </button>
+                      </li>
+                    </>
                   )}
                 </ul>
               </div>

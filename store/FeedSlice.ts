@@ -251,7 +251,7 @@ const FeedSlice: StateCreator<FeedSlice & PoolSlice, [], [], FeedSlice> = (
     feed: {
       data: null,
       error: null,
-      isFetching: true,
+      isFetching: false,
       fetchFeed,
       clearFeed,
     },

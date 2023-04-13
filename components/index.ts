@@ -8,5 +8,6 @@ export { default as Header } from './Header';
 export { default as ListView } from './ListView';
 export { default as Nip05View } from './Nip05View';
 export { default as ProfileCard } from './ProfileCard';
+export { default as Publish } from './Publish';
 export { default as Searchbar } from './Searchbar';
 export { default as Spinner } from './Spinner';

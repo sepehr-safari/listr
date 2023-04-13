@@ -43,41 +43,43 @@ const BookmarkContent = ({ tags, headers }: BookmarkContentProps) => {
 
                   return (
                     <li key={index}>
-                      {tagType === 'text' &&
-                      !view.startsWith('http' || 'www.') ? (
-                        <>
-                          <p className="text-neutral flex gap-2 break-all">
+                      <p className="text-neutral flex gap-2">
+                        {tagType === 'text' &&
+                        !view.startsWith('http' || 'www.') ? (
+                          <>
                             <StarIcon width={20} />
-                            {view}
-                          </p>
-                        </>
-                      ) : (
-                        <>
-                          <a
-                            className="text-neutral flex gap-2 break-all"
-                            href={view}
-                          >
-                            <StarIcon width={20} />
-                            {view}
-                          </a>
-                        </>
-                      )}
+                            <span className="break-all">{view}</span>
+                          </>
+                        ) : (
+                          <>
+                            <a className="flex gap-2" href={view}>
+                              <StarIcon width={20} />
+                              <span className="break-all">{view}</span>
+                            </a>
+                          </>
+                        )}
+                      </p>
                     </li>
                   );
                 }
 
                 return (
                   <li key={index} className="ml-7">
-                    <p className="flex gap-2 break-all items-center">
-                      {index > 2 && (
-                        <span className="text-xs">{headers[index]}:</span>
-                      )}
+                    <p className="flex gap-2 items-center">
                       {value.startsWith('http' || 'www.') ? (
                         <>
-                          <a href={value}>{value}</a>
+                          <a className="flex gap-2" href={value}>
+                            {index > 2 && <span>{headers[index]}:</span>}
+
+                            <span className="break-all">{value}</span>
+                          </a>
                         </>
                       ) : (
-                        <span>{value}</span>
+                        <>
+                          {index > 2 && <span>{headers[index]}:</span>}
+
+                          <span className="break-all">{value}</span>
+                        </>
                       )}
                     </p>
                   </li>
