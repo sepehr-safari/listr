@@ -81,6 +81,13 @@ const FeedSlice: StateCreator<FeedSlice & PoolSlice, [], [], FeedSlice> = (
     };
 
     const handleNewBookmark = (e: Event) => {
+      if (
+        !e.tags?.find((tag) => tag[0] === 'd') ||
+        !e.tags?.find((tag) => tag[0] === 'headers')
+      ) {
+        return;
+      }
+
       set((state) => ({
         feed: {
           ...state.feed,

@@ -42,34 +42,32 @@ const BookmarkCard = ({ data }: { data: BookmarkData }) => {
 
   const { event, metadata, reactions = [] } = data;
 
-  const dTag = event.tags.find((tag) => tag[0] === 'd');
-  const typeTag = event.tags.find((tag) => tag[0] === 'type');
-  const pureTags = event.tags.filter(
-    (tag) => tag[0] !== 'type' && tag[0] !== 'd'
-  );
+  const [dTag, category] = event.tags.find((tag) => tag[0] === 'd')!;
+  const [headersTag, ...headers] = event.tags.find(
+    (tag) => tag[0] === 'headers'
+  )!;
+  const dataList = event.tags.filter(
+    (tag) => tag[0] !== 'd' && tag[0] !== 'headers'
+  )!;
 
   const handleDeleteBookmark = useCallback(
-    (id: string) => {
+    async (id: string) => {
       setIsDeleting(true);
-      publish({
-        kind: 5,
-        tags: [['e', id]],
-        onSuccess: () => {
-          setIsDeleted(true);
-        },
-      });
+      const event = await publish({ kind: 5, tags: [['e', id]] });
+      setIsDeleting(false);
+      if (event) setIsDeleted(true);
     },
     [publish]
   );
 
   const handleNextPage = useCallback(() => {
     setSliceStart((prev) =>
-      prev + 5 > pureTags.length - 5 ? pureTags.length - 5 : prev + 5
+      prev + 5 > dataList.length - 5 ? dataList.length - 5 : prev + 5
     );
     setSliceEnd((prev) =>
-      prev + 5 > pureTags.length ? pureTags.length : prev + 5
+      prev + 5 > dataList.length ? dataList.length : prev + 5
     );
-  }, [pureTags.length]);
+  }, [dataList.length]);
 
   const handlePrevPage = useCallback(() => {
     setSliceStart((prev) => (prev - 5 < 0 ? 0 : prev - 5));
@@ -99,7 +97,7 @@ const BookmarkCard = ({ data }: { data: BookmarkData }) => {
     );
   }
 
-  if (!dTag || !typeTag)
+  if (!dTag || !category || !headersTag || !headers || !dataList)
     return <CardContainer>{`list data corrupted`}</CardContainer>;
 
   return (
@@ -195,17 +193,17 @@ const BookmarkCard = ({ data }: { data: BookmarkData }) => {
           <div className="flex flex-col gap-4 break-words">
             <div className="flex justify-end gap-2">
               <Link
-                href={encodeURI('/category/' + dTag?.[1])}
+                href={encodeURI('/category/' + category)}
                 className="btn btn-sm btn-outline text-neutral gap-2 md:btn md:btn-outline md:text-neutral"
               >
                 <BookmarkIcon width={24} />
-                {dTag?.[1]}
+                {category}
               </Link>
             </div>
 
             <BookmarkContent
-              tags={pureTags.slice(sliceStart, sliceEnd)}
-              bookmarkType={typeTag?.[1]}
+              tags={dataList.slice(sliceStart, sliceEnd)}
+              headers={headers}
             />
           </div>
 
@@ -217,7 +215,7 @@ const BookmarkCard = ({ data }: { data: BookmarkData }) => {
               </button>
             )}
 
-            {sliceEnd < pureTags.length && (
+            {sliceEnd < dataList.length && (
               <button
                 className="btn btn-ghost gap-2 ml-auto"
                 onClick={handleNextPage}
