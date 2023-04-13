@@ -23,18 +23,20 @@ const BookmarkContent = ({ tags, headers }: BookmarkContentProps) => {
                 if (index === 0) {
                   let encodedId = '';
 
-                  if (tagType === 'e') {
-                    encodedId = nip19.noteEncode(value);
-                  } else if (tagType === 'p') {
-                    encodedId = nip19.npubEncode(value);
-                  } else if (tagType === 'a') {
-                    const [kind, pubkey, identifier] = value.split(':');
-                    encodedId = nip19.naddrEncode({
-                      identifier,
-                      kind: +kind,
-                      pubkey,
-                    });
-                  }
+                  try {
+                    if (tagType === 'e') {
+                      encodedId = nip19.noteEncode(value);
+                    } else if (tagType === 'p') {
+                      encodedId = nip19.npubEncode(value);
+                    } else if (tagType === 'a') {
+                      const [kind, pubkey, identifier] = value.split(':');
+                      encodedId = nip19.naddrEncode({
+                        identifier,
+                        kind: +kind,
+                        pubkey,
+                      });
+                    }
+                  } catch (_) {}
 
                   const view =
                     tagType === 'a' || tagType === 'e' || tagType === 'p'
