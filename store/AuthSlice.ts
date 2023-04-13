@@ -4,9 +4,10 @@ import { StateCreator } from 'zustand';
 export interface AuthSlice {
   auth: {
     user: {
-      data: { publicKey: string; privateKey: string } | null;
+      data: { publicKey: string; privateKey?: string } | null;
     };
-    login: (privateKey: string) => void;
+    loginWithPublicKey: (publicKey: string) => void;
+    loginWithPrivateKey: (privateKey: string) => void;
     logout: () => void;
   };
 }
@@ -46,7 +47,14 @@ const createAuthSlice: StateCreator<AuthSlice> = (set) => ({
     user: {
       data: getLocalStorage(),
     },
-    login: (privateKey: string) => {
+    loginWithPublicKey: (publicKey: string) => {
+      setLocalStorage({ publicKey });
+
+      set((state) => ({
+        auth: { ...state.auth, user: { data: { publicKey } } },
+      }));
+    },
+    loginWithPrivateKey: (privateKey: string) => {
       const publicKey = getPublicKey(privateKey);
 
       setLocalStorage({ publicKey, privateKey });

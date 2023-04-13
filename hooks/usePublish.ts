@@ -1,10 +1,4 @@
-import {
-  Event,
-  getEventHash,
-  getPublicKey,
-  signEvent,
-  UnsignedEvent,
-} from 'nostr-tools';
+import { Event, getEventHash, signEvent, UnsignedEvent } from 'nostr-tools';
 
 import useStore from '@/store';
 
@@ -12,49 +6,47 @@ interface Options {
   kind: number;
   tags?: string[][];
   content?: Record<string, string>;
-  pubkey?: string;
-  privateKey?: string;
-  onSuccess?: (event: Event) => void;
-  onFailure?: () => void;
 }
 const usePublish = () => {
   const userData = useStore((state) => state.auth.user.data);
   const publish = useStore((state) => state.pool.publish);
 
-  return ({
-    content,
-    kind,
-    tags,
-    privateKey = userData?.privateKey,
-    onFailure,
-    onSuccess,
-  }: Options) => {
-    if (!privateKey) {
-      throw new Error('No private key provided');
-    }
+  return ({ content, kind, tags }: Options) => {
+    return new Promise<Event>(async (resolve, reject) => {
+      const pubkey = userData
+        ? userData.publicKey
+        : (await (window as any).nostr.getPublicKey()) || '';
+      const pk = userData ? userData.privateKey : '';
 
-    const unsignedEvent: UnsignedEvent = {
-      pubkey: getPublicKey(privateKey),
-      created_at: Math.floor(Date.now() / 1000),
-      content: JSON.stringify(content) || '',
-      tags: tags || [],
-      kind,
-    };
+      if (!pubkey) {
+        reject(new Error('No public key provided'));
+      }
 
-    const signedEvent: Event = {
-      ...unsignedEvent,
-      id: getEventHash(unsignedEvent),
-      sig: signEvent(unsignedEvent, privateKey),
-    };
+      const unsignedEvent: UnsignedEvent = {
+        pubkey,
+        created_at: Math.floor(Date.now() / 1000),
+        content: JSON.stringify(content) || '',
+        tags: tags || [],
+        kind,
+      };
 
-    const pub = publish(signedEvent);
+      const signedEvent: Event = pk
+        ? {
+            ...unsignedEvent,
+            id: getEventHash(unsignedEvent),
+            sig: signEvent(unsignedEvent, pk),
+          }
+        : (await (window as any).nostr.signEvent(unsignedEvent)) || {};
 
-    pub.on('ok', () => {
-      onSuccess && onSuccess(signedEvent);
-    });
+      if (!signedEvent.sig) {
+        reject(new Error('No signature provided'));
+      }
 
-    pub.on('failed', () => {
-      onFailure && onFailure();
+      const pub = publish(signedEvent);
+
+      pub.on('ok', () => {
+        resolve(signedEvent);
+      });
     });
   };
 };

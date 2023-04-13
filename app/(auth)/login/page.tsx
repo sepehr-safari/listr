@@ -14,7 +14,9 @@ const Login = () => {
   const router = useRouter();
 
   const { data } = useStore((state) => state.auth.user);
-  const login = useStore((state) => state.auth.login);
+  const { loginWithPublicKey, loginWithPrivateKey } = useStore(
+    (state) => state.auth
+  );
   const publish = usePublish();
 
   const [privateKey, setPrivateKey] = useState<string>('');
@@ -43,25 +45,31 @@ const Login = () => {
     setPrivateKey(privateKey);
   }, []);
 
-  const handleLogin = useCallback(() => {
+  const handleLoginWithPrivateKey = useCallback(async () => {
     if (!privateKey) return;
 
     setIsLoading(true);
 
-    if (!isNewUser) {
-      login(privateKey);
+    if (isNewUser) {
+      const event = await publish({ kind: 0 });
 
-      return;
+      if (!event) return;
     }
 
-    if (!publish) return;
+    loginWithPrivateKey(privateKey);
+  }, [loginWithPrivateKey, privateKey, isNewUser, publish]);
 
-    publish({
-      kind: 0,
-      privateKey,
-      onSuccess: () => login(privateKey),
-    });
-  }, [login, privateKey, isNewUser, publish]);
+  const handleLoginWithExtension = useCallback(async () => {
+    setIsLoading(true);
+
+    if (!(window as any).nostr) return;
+
+    const pubkey = await (window as any).nostr.getPublicKey();
+
+    if (pubkey) {
+      loginWithPublicKey(pubkey);
+    }
+  }, []);
 
   return (
     <>
@@ -74,6 +82,15 @@ const Login = () => {
 
       <CardContainer>
         <div className="form-control w-full">
+          <button
+            className="btn btn-sm mt-2 md:btn"
+            onClick={handleLoginWithExtension}
+          >
+            Login with extension
+          </button>
+
+          <p className="text-center my-4">{`- or -`}</p>
+
           <label className="label">
             <span className="label-text">Login with your private key:</span>
           </label>
@@ -112,7 +129,10 @@ const Login = () => {
         {isLoading ? (
           <Spinner />
         ) : (
-          <button className="btn btn-sm mt-2 md:btn" onClick={handleLogin}>
+          <button
+            className="btn btn-sm btn-primary mt-2"
+            onClick={handleLoginWithPrivateKey}
+          >
             Login
           </button>
         )}
@@ -122,7 +142,10 @@ const Login = () => {
         <CardContainer>
           <p className="mb-2 text-center">Don't you have a private key?</p>
 
-          <button className="btn btn-sm" onClick={handleGenerateButton}>
+          <button
+            className="btn btn-sm btn-primary"
+            onClick={handleGenerateButton}
+          >
             Generate new private key
           </button>
         </CardContainer>

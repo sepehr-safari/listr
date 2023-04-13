@@ -11,7 +11,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const userData = useStore((state) => state.auth.user.data);
 
   useEffect(() => {
-    if (!userData || !userData.privateKey) {
+    if (!userData) {
       router.replace('/login');
     }
   }, [router, userData]);

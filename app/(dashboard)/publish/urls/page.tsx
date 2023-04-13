@@ -23,7 +23,7 @@ const Urls = () => {
 
   const publish = usePublish();
 
-  const handlePublish = useCallback(() => {
+  const handlePublish = useCallback(async () => {
     if (!catRef.current?.value) return;
 
     const filteredUrlList = urlList.filter((url, index, self) => {
@@ -49,19 +49,17 @@ const Urls = () => {
       tags.push(['u', url.address, url.label, url.desc]);
     });
 
-    publish({
-      kind: 33777,
-      tags,
-      onSuccess: (event) => {
-        const naddr = nip19.naddrEncode({
-          identifier: event.id,
-          pubkey: event.pubkey,
-          kind: event.kind,
-        });
+    const event = await publish({ kind: 33777, tags });
 
-        router.push(`/list/${naddr}`);
-      },
-    });
+    if (event) {
+      const naddr = nip19.naddrEncode({
+        identifier: event.id,
+        pubkey: event.pubkey,
+        kind: event.kind,
+      });
+
+      router.push(`/list/${naddr}`);
+    }
   }, [publish, urlList, catRef.current]);
 
   const handleInputAddressChange = useCallback(
@@ -183,12 +181,7 @@ const Urls = () => {
           ))}
       </div>
 
-      <button
-        className="btn btn-sm"
-        onClick={() => {
-          handlePublish();
-        }}
-      >
+      <button className="btn btn-sm" onClick={handlePublish}>
         Publish
       </button>
     </>

@@ -15,7 +15,7 @@ const Me = () => {
   );
 
   useEffect(() => {
-    if (!userData || !userData.privateKey) {
+    if (!userData) {
       router.replace('/login');
     }
 
