@@ -1,3 +1,7 @@
+> :warning: **This repository is deprecated.** 
+
+> This repository is no longer maintained due to the development of a superior replacement. Please note that this code may not be up-to-date or functional, and we recommend using the new application instead. The new application will be available soon.
+
 # Listr - A Nostr Web Client for Making Lists
 
 Listr is a simple and functional web app based on the Nostr Protocol for making lists. With Listr, users can create lists of their favorite websites, Nostr relays, Nostr notes, Nostr articles, or Nostr profiles based on certain categories. Other users can then browse these lists and find new content or users to follow.
