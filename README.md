@@ -18,14 +18,6 @@ Listr is a simple and functional web app based on the Nostr Protocol for making 
 - Zero metadata manipulation: Listr does not modify any metadata field of your profile. Your bookmarks, contacts, and other data are safe.
 - No data collection: Listr does not collect any data from users. All data is stored on the public Nostr relays and is publicly available to anyone.
 
-## Getting Started
-
-To get started with Listr, simply visit our website at [listr-demo.vercel.app](https://listr-demo.vercel.app/) or clone the repository and run it locally.
-
-## Contributing
-
-We welcome contributions from the community. Please see our [CONTRIBUTING.md](https://github.com/sepehr-safari/listr/blob/master/CONTRIBUTING.md) file for details on how to contribute to the project.
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/sepehr-safari/listr/blob/master/LICENSE.md) file for details.
