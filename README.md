@@ -1,6 +1,11 @@
 > :warning: **This repository is deprecated.** 
 
-> This repository is no longer maintained due to the development of a superior replacement. Please note that this code may not be up-to-date or functional, and we recommend using the new application instead. The new application will be available soon.
+> This repository is no longer maintained due to the development of a superior replacement. Please note that this code may not be up-to-date or functional, and we recommend using the new application instead:
+>
+> https://github.com/sepehr-safari/pinstr
+> 
+> https://pinstr.app
+>
 
 # Listr - A Nostr Web Client for Making Lists
 
